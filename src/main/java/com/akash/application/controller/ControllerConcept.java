@@ -3,6 +3,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.akash.application.service.ServiceConcept;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 @RestController
 public class ControllerConcept {
 	@Autowired
@@ -16,4 +18,11 @@ public class ControllerConcept {
 	public String pingTest() {
 		return "Service is up and running.";
 	}
+
+	@GetMapping("/time")
+	public String getCurrentTime() {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			return LocalDateTime.now().format(formatter);
+	}
+
 }
