@@ -36,6 +36,7 @@ jobs:
           echo "Starting app..."
           java -jar target/*.jar &
           sleep 20
+        runs-on: self-hosted
     - name: Upload JAR
       uses: actions/upload-artifact@v4
       with:
