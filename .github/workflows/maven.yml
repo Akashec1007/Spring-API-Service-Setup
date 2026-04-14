@@ -31,8 +31,8 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-      - name: Run JAR (Demo)
-        run: |
+    - name: Run JAR (Demo)
+      run: |
           echo "Starting app..."
           java -jar target/*.jar &
           sleep 20
