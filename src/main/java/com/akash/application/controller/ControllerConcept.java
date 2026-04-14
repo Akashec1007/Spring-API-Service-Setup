@@ -11,7 +11,7 @@ public class ControllerConcept {
 	private ServiceConcept serviceConcept;
 	@GetMapping("/hello")
 	public String hello() {
-		return "Hello, Spring Boot Controller class invoked"+serviceConcept.getGreetingMessage();
+		return "Hello, Spring Boot Controller class invoked "+serviceConcept.getGreetingMessage();
 	}
 
 	@GetMapping("/")

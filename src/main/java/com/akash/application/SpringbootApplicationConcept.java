@@ -14,6 +14,12 @@ public class SpringbootApplicationConcept {
 		RestTemplate restTemplate = new RestTemplate();
 		String url = "http://localhost:8080/hello";
 		String response = restTemplate.getForObject(url, String.class);
-		System.out.println("Spring Boot Application Self Call Response "+response);
+		System.out.println("Spring Boot Application Self Call Response for /hello endpoint "+response);
+		url = "http://localhost:8080/";
+		response = restTemplate.getForObject(url, String.class);
+		System.out.println("Spring Boot Application Self Call Response for / endpoint "+response);
+		url = "http://localhost:8080/time";
+		response = restTemplate.getForObject(url, String.class);
+		System.out.println("Spring Boot Application Self Call Response for /time endpoint "+response);
 	}
 }
