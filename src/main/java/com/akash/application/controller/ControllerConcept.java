@@ -16,6 +16,7 @@ public class ControllerConcept {
 
 	@GetMapping("/")
 	public String pingTest() {
+		System.out.println("Hey there"):
 		return "Service is up and running.";
 	}
 
