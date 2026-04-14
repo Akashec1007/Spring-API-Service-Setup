@@ -9,6 +9,6 @@ public class SpringbootApplicationConcept {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		System.out.println("Spring Boot Application Execution Start Triggers @ " +LocalDateTime.now().format(formatter));
 		SpringApplication.run(SpringbootApplicationConcept.class, args);
-		System.out.println("Spring Boot Application Execution Strted @ " +LocalDateTime.now().format(formatter));
+		System.out.println("Spring Boot Application Execution Started @ " +LocalDateTime.now().format(formatter));
 	}
 }
