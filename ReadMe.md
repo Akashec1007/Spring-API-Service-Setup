@@ -19,7 +19,7 @@ Artifact: springbootdemo
 Java: 21
 
 Dependencies: Spring Web
-
+Or you can start with the same files provided in the project point 3 becomes optional in this scenario
 4) Put src and pom.xml in parent folder and run "mvn clean package"
 5) now run the jar using "java -jar target\jar name" from the target folder or run by "mvn spring-boot:run" from the project folder
 6) Service will start running at http://localhost:8080/
