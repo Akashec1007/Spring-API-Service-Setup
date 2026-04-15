@@ -21,5 +21,8 @@ public class SpringbootApplicationConcept {
 		url = "http://localhost:8080/time";
 		response = restTemplate.getForObject(url, String.class);
 		System.out.println("Spring Boot Application Self Call Response for /time endpoint "+response);
+		url = "http://localhost:8080/ask?strQuery=What are AI Models and Large Language Models are?";
+		response = restTemplate.getForObject(url, String.class);
+		System.out.println("Spring Boot Application Self Call Response for /ask endpoint "+response);
 	}
 }
