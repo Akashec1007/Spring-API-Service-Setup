@@ -39,7 +39,7 @@ jobs:
       run: |
           echo "Starting app..."
           java -jar target/*.jar &
-          sleep 20
+         # sleep 20
 
     - name: Upload JAR
       uses: actions/upload-artifact@v4
