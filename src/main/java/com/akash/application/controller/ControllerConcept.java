@@ -32,7 +32,7 @@ public class ControllerConcept {
 	}
 
 	@GetMapping("/ready")
-	public String getCurrentTime() {
+	public String getReady() {
 			return "I am , are you?";
 	}
 
