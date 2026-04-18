@@ -39,7 +39,7 @@ jobs:
           username: akashsrvstv64
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd ~/Spring-API-Service-Setup
+            cd ~/home/akashsrvstv64
             ./deploy.sh
     - name: Upload JAR
       uses: actions/upload-artifact@v4
