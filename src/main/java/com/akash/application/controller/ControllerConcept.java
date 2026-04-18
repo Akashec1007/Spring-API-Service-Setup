@@ -31,4 +31,9 @@ public class ControllerConcept {
 		return serviceConcept.askAI(strQuery);
 	}
 
+	@GetMapping("/ready")
+	public String getCurrentTime() {
+			return "I am , are you?";
+	}
+
 }

@@ -42,3 +42,5 @@ Open PuTTYgen
 Load → mykey.pem
 Save private key → mykey.ppk
 4. now you can connect by using public ip on port 22 with username in PuTTy
+
+Happy Deployment
