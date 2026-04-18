@@ -23,3 +23,9 @@ Or you can start with the same files provided in the project point 3 becomes opt
 4) Put src and pom.xml in parent folder and run "mvn clean package"
 5) now run the jar using "java -jar target\jar name" from the target folder or run by "mvn spring-boot:run" from the project folder
 6) Service will start running at http://localhost:8080/
+
+Installation and excution on linux distribution 
+1. sudo apt update && sudo apt upgrade -y
+2. sudo apt install openjdk-17-jdk -y
+3. and then start the app in no hup so it is available after you close terminal
+nohup java -jar application-0.0.1-SNAPSHOT.jar > app.log 2>&1 &

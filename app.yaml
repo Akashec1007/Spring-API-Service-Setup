@@ -1,3 +1,0 @@
-runtime: java17
-automatic_scaling:
-  max_instances: 2
