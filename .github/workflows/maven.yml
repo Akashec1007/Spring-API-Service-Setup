@@ -30,8 +30,8 @@ jobs:
     - name: Run JAR (Demo)
       run: |
          echo "Starting app...Stage will Go in Sleep for 20 second after last API test call"
-         java -jar target/*.jar &
-         sleep 20
+         #java -jar target/*.jar &
+         #sleep 20
     - name: SSH Deploy
       uses: appleboy/ssh-action@v1.0.3
       with:
@@ -39,7 +39,7 @@ jobs:
           username: akashsrvstv64
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd ~/home/akashsrvstv64
+            cd ~/
             ./deploy.sh
     - name: Upload JAR
       uses: actions/upload-artifact@v4
