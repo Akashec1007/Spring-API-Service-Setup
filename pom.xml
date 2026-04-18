@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.akash</groupId>
 	<artifactId>application</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>app</version>
 	<name>application</name>
 	<description>Application project for Spring Boot</description>
 	<url/>
