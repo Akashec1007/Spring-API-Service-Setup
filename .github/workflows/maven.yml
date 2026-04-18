@@ -32,12 +32,20 @@ jobs:
          echo "Starting app...Stage will Go in Sleep for 20 second after last API test call"
          java -jar target/*.jar &
          sleep 20
-
+    - name: SSH Deploy
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+          host: 34.133.165.201
+          username: akashsrvstv64
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/Spring-API-Service-Setup
+            ./deploy.sh
     - name: Upload JAR
       uses: actions/upload-artifact@v4
       with:
         name: springboot-app
-        path: target/*.jar
+        path: target/application-0.0.1-SNAPSHOT.jar
 
     - name: Update dependency graph
       uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
