@@ -28,7 +28,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Run JAR (Demo)
-     run: |
+      run: |
          echo "Starting app...Stage will Go in Sleep for 20 second after last API test call"
          java -jar target/*.jar &
          sleep 20
