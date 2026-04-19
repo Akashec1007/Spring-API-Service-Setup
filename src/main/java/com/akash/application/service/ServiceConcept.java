@@ -18,35 +18,50 @@ public class ServiceConcept {
 	@Value("${gemini.api.url}")
 	private String strApiUrl;
 	public String askAI(String prompt) throws Exception {
-		String body = """
-					{
-						"model": "llama3-70b-8192",
-						"messages": [
-						{
-							"role": "user",
-							"content": "%s"
-						}
-						]
-					}
-"				"".formatted(prompt);
-			HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create(strApiUrl))
-				.header("Authorization", strApiKey)
-				.header("Content-Type", "application/json")
-				.POST(HttpRequest.BodyPublishers.ofString(body))
-				.build();
-			HttpClient client = HttpClient.newHttpClient();
-			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-			System.out.println("response---------------->"+response);
-			JSONObject json = new JSONObject(response.body());
-			if (json.has("error")) {
-				return json.getJSONObject("error").getString("message");
-			}
-			JSONArray choices = json.getJSONArray("choices");
-			String reply = choices
-				.getJSONObject(0)
-				.getJSONObject("message")
-				.getString("content");
-		return reply;
+    String body = """
+    {
+        "model": "llama3-70b-8192",
+        "messages": [
+            {
+                "role": "user",
+                "content": "%s"
+            }
+        ]
+    }
+    """.formatted(prompt);
+
+    HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(strApiUrl))
+            .header("Authorization", "Bearer " + strApiKey) // ✅ FIXED
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(body))
+            .build();
+
+    HttpClient client = HttpClient.newHttpClient();
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+    System.out.println("RAW RESPONSE => " + response.body()); // ✅ better debug
+
+    JSONObject json = new JSONObject(response.body());
+
+    // ✅ ERROR HANDLING
+    if (json.has("error")) {
+        return "❌ " + json.getJSONObject("error").getString("message");
+    }
+
+    // ✅ SAFE PARSE
+    if (json.has("choices")) {
+        JSONArray choices = json.getJSONArray("choices");
+
+        if (choices.length() > 0) {
+            JSONObject message = choices
+                    .getJSONObject(0)
+                    .getJSONObject("message");
+
+            return message.optString("content", "No response");
+        }
+    }
+
+    return "No response from AI";
 	}
 }
