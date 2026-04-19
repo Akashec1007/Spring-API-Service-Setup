@@ -31,12 +31,6 @@ public class ControllerConcept {
 		return serviceConcept.askAI(strQuery);
 	}
 
-	@GetMapping("/text2Image")
-	public String text2Image(@RequestParam String prompt) throws Exception {
-		System.out.println("in text2Image----------->"+prompt);
-		return serviceConcept.generateImageHtml(prompt);
-	}
-
 	@GetMapping("/ready")
 	public String getReady() {
 			return "I am , are you?";
