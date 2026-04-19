@@ -33,7 +33,7 @@ public class ControllerConcept {
 
 	@GetMapping("/text2Image")
 	public String text2Image(@RequestParam String prompt) throws Exception {
-		return serviceConcept.generateImageHtml(strQuery);
+		return serviceConcept.generateImageHtml(prompt);
 	}
 
 	@GetMapping("/ready")
