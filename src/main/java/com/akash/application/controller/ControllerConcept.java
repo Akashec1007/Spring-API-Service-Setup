@@ -16,8 +16,8 @@ public class ControllerConcept {
 	}
 
 	@GetMapping("/")
-	public String pingTest() {
-		return "Service is up and running.";
+	public String home() {
+		return "chat";
 	}
 
 	@GetMapping("/time")
