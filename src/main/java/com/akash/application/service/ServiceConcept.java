@@ -18,7 +18,6 @@ public class ServiceConcept {
 	@Value("${gemini.api.url}")
 	private String strApiUrl;
 	public String askAI(String prompt) throws Exception {
-	System.out.println("in askAI--->"+prompt);
 		String body = """
 			{
 			"contents": [
@@ -64,6 +63,7 @@ public class ServiceConcept {
 				.build();
 		HttpClient client = HttpClient.newHttpClient();
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+		System.out.println("----------------->"+response.body());
 		JSONObject json = new JSONObject(response.body());
 		JSONArray parts = json
 				.getJSONArray("candidates")
