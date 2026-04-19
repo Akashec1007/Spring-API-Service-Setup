@@ -38,7 +38,7 @@ public class ServiceConcept {
 			return response.body();
 	}
 	@Value("${gemini.imageApi.url}")
-	private String strImageApiUrl
+	private String strImageApiUrl;
 	public String generateImageHtml(String prompt) throws Exception {
 		String body = """
 		{
