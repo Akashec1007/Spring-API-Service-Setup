@@ -20,7 +20,7 @@ public class ServiceConcept {
 	public String askAI(String prompt) throws Exception {
     String body = """
     {
-        "model": "llama3-70b-8192",
+        "model": "llama-3.3-70b-versatile",
         "messages": [
             {
                 "role": "user",
