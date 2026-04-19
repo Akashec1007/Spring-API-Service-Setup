@@ -18,6 +18,7 @@ public class ServiceConcept {
 	@Value("${gemini.api.url}")
 	private String strApiUrl;
 	public String askAI(String prompt) throws Exception {
+	System.out.println("in askAI--->"+prompt);
 		String body = """
 			{
 			"contents": [
