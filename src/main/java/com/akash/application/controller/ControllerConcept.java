@@ -28,6 +28,7 @@ public class ControllerConcept {
 
 	@GetMapping("/ask")
 	public String ask(@RequestParam String strQuery) throws Exception {
+		System.out.println("strQuery------>"+strQuery);
 		return serviceConcept.askAI(strQuery);
 	}
 
