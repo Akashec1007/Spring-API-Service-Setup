@@ -38,6 +38,9 @@ public class ServiceConcept {
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 		String responseBody = response.body();
 		System.out.println("responseBody------------------------->"+responseBody);
+		if (response.statusCode() != 200) {
+			return responseBody;
+		}
 		JSONObject json = new JSONObject(responseBody);
 		String strAIReply = "";
 		if (json.has("candidates")) {

@@ -54,7 +54,7 @@
 </head>
 <body>
 
-<h2>🤖 AI Chat</h2>
+<h2>AI Chat</h2>
 
 <div id="chatBox"></div>
 
@@ -73,7 +73,7 @@
         let chatBox = document.getElementById("chatBox");
 
         // show user message
-        chatBox.innerHTML += `<div class="user">👤 ${message}</div>`;
+        chatBox.innerHTML += `<div class="user">${message}</div>`;
         input.value = "";
 
         try {
@@ -82,7 +82,7 @@
             let data = await response.text();
 
             // show bot response
-            chatBox.innerHTML += `<div class="bot">🤖 ${data}</div>`;
+            chatBox.innerHTML += `<div class="bot">${data}</div>`;
         } catch (error) {
             chatBox.innerHTML += `<div class="bot">❌ Error calling API</div>`;
         }
