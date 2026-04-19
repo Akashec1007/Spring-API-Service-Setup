@@ -38,8 +38,12 @@ public class ServiceConcept {
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 		String responseBody = response.body();
 		System.out.println("responseBody------------------------->"+responseBody);
-		if (response.statusCode() != 200) {
-			return responseBody;
+		if ( response.statusCode() != 200 ) {
+			if ( response.statusCode() == 429 ) {
+				return "You exceeded your current quota, please check your plan and billing details. For more information on this contact akashsrvstv64@gmail.com";
+			} else {
+				return responseBody;
+			}
 		}
 		JSONObject json = new JSONObject(responseBody);
 		String strAIReply = "";
