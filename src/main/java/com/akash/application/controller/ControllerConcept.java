@@ -17,7 +17,7 @@ public class ControllerConcept {
 
 	@GetMapping("/")
 	public String home() {
-		return "chat";
+		return "redirect:/chat.html";
 	}
 
 	@GetMapping("/time")
