@@ -78,7 +78,7 @@
 
         try {
             // call Spring Boot API
-            let response = await fetch(`/ask?prompt=${encodeURIComponent(message)}`);
+            let response = await fetch(`/ask?strQuery=${encodeURIComponent(message)}`);
             let data = await response.text();
 
             // show bot response
