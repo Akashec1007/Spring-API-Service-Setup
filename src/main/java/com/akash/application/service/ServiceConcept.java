@@ -35,7 +35,8 @@ public class ServiceConcept {
 				.POST(HttpRequest.BodyPublishers.ofString(body))
 				.build();
 		HttpClient client = HttpClient.newHttpClient();
-		HttpResponse<String> responseBody = client.send(request, HttpResponse.BodyHandlers.ofString());
+		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+		String responseBody = response.body();
 		System.out.println("responseBody------------------------->"+responseBody);
 		JSONObject json = new JSONObject(responseBody);
 		String strAIReply = "";

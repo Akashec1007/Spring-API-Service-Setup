@@ -11,18 +11,5 @@ public class SpringbootApplicationConcept {
 		System.out.println("Spring Boot Application Execution Start Triggers @ "+LocalDateTime.now().format(formatter));
 		SpringApplication.run(SpringbootApplicationConcept.class, args);
 		System.out.println("Spring Boot Application Execution Started @ "+LocalDateTime.now().format(formatter));
-		RestTemplate restTemplate = new RestTemplate();
-		String url = "http://localhost:8080/hello";
-		String response = restTemplate.getForObject(url, String.class);
-		System.out.println("Spring Boot Application Self Call Response for /hello endpoint "+response);
-		url = "http://localhost:8080/";
-		response = restTemplate.getForObject(url, String.class);
-		System.out.println("Spring Boot Application Self Call Response for / endpoint "+response);
-		url = "http://localhost:8080/time";
-		response = restTemplate.getForObject(url, String.class);
-		System.out.println("Spring Boot Application Self Call Response for /time endpoint "+response);
-		url = "http://localhost:8080/ask?strQuery=What are AI Models and Large Language Models are?";
-		response = restTemplate.getForObject(url, String.class);
-		System.out.println("Spring Boot Application Self Call Response for /ask endpoint "+response);
 	}
 }
