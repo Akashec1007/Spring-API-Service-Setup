@@ -2,61 +2,90 @@
 <html>
 <head>
     <title>AI Chat</title>
+
     <style>
         body {
-            font-family: Arial;
-            background: #111;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0f172a;
             color: white;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
         }
 
-        #chatBox {
-            width: 60%;
-            margin: 20px auto;
-            border: 1px solid #444;
-            padding: 10px;
-            height: 400px;
+        header {
+            padding: 15px;
+            background: #020617;
+            text-align: center;
+            font-size: 18px;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        #chatContainer {
+            flex: 1;
             overflow-y: auto;
-            background: #1e1e1e;
+            padding: 20px;
+        }
+
+        .message {
+            max-width: 60%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            line-height: 1.5;
         }
 
         .user {
+            background: #2563eb;
+            margin-left: auto;
             text-align: right;
-            color: #00d4ff;
-            margin: 10px;
         }
 
         .bot {
-            text-align: left;
-            color: #00ff88;
-            margin: 10px;
+            background: #1e293b;
+            margin-right: auto;
         }
 
         #inputArea {
-            margin-top: 10px;
+            display: flex;
+            padding: 15px;
+            background: #020617;
+            border-top: 1px solid #1e293b;
         }
 
         input {
-            width: 50%;
-            padding: 10px;
-            border-radius: 5px;
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
             border: none;
+            outline: none;
+            font-size: 16px;
         }
 
         button {
-            padding: 10px 20px;
-            background: #00d4ff;
+            margin-left: 10px;
+            padding: 12px 20px;
+            background: #22c55e;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
+        .typing {
+            font-style: italic;
+            opacity: 0.7;
         }
     </style>
 </head>
+
 <body>
 
-<h2>AI Chat</h2>
+<header>🤖 AI Chat</header>
 
-<div id="chatBox"></div>
+<div id="chatContainer"></div>
 
 <div id="inputArea">
     <input type="text" id="userInput" placeholder="Type your message..." />
@@ -64,40 +93,55 @@
 </div>
 
 <script>
-    async function sendMessage() {
-        let input = document.getElementById("userInput");
-        let message = input.value.trim();
 
-        if (!message) return;
+async function sendMessage() {
 
-        let chatBox = document.getElementById("chatBox");
+    let input = document.getElementById("userInput");
+    let message = input.value.trim();
+    if (!message) return;
 
-        // show user message
-        chatBox.innerHTML += `<div class="user">You: ${message}</div>`;
-        input.value = "";
+    let chat = document.getElementById("chatContainer");
 
-        try {
-            // call Spring Boot API
-            let response = await fetch(`/ask?strQuery=${encodeURIComponent(message)}`);
-            let data = await response.text();
+    // USER MESSAGE
+    chat.innerHTML += `<div class="message user">${message}</div>`;
+    input.value = "";
 
-            // show bot response
-            chatBox.innerHTML += `<div class="bot">Me: ${data}</div>`;
-        } catch (error) {
-            chatBox.innerHTML += `<div class="bot">❌ Error calling API</div>`;
+    // BOT MESSAGE CONTAINER
+    let botId = "bot-" + Date.now();
+    chat.innerHTML += `<div id="${botId}" class="message bot"></div>`;
+
+    chat.scrollTop = chat.scrollHeight;
+
+    try {
+        let response = await fetch(`/ask?strQuery=${encodeURIComponent(message)}`);
+        let fullText = await response.text();
+
+        // ✨ STREAMING EFFECT (typing)
+        let i = 0;
+        let speed = 15; // lower = faster
+
+        function typeEffect() {
+            if (i < fullText.length) {
+                document.getElementById(botId).innerHTML += fullText.charAt(i);
+                i++;
+                chat.scrollTop = chat.scrollHeight;
+                setTimeout(typeEffect, speed);
+            }
         }
 
-        // auto scroll
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
+        typeEffect();
 
-    // press Enter to send
-    document.getElementById("userInput")
-        .addEventListener("keypress", function (e) {
-            if (e.key === "Enter") {
-                sendMessage();
-            }
-        });
+    } catch (e) {
+        document.getElementById(botId).innerText = "Error contacting server";
+    }
+}
+
+// ENTER KEY
+document.getElementById("userInput")
+    .addEventListener("keypress", function(e) {
+        if (e.key === "Enter") sendMessage();
+    });
+
 </script>
 
 </body>
