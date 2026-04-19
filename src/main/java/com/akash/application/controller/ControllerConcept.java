@@ -15,11 +15,6 @@ public class ControllerConcept {
 		return "Hello, Spring Boot Controller class invoked "+serviceConcept.getGreetingMessage();
 	}
 
-	@GetMapping("/")
-	public String home() {
-		return "redirect:/chat.html";
-	}
-
 	@GetMapping("/time")
 	public String getCurrentTime() {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
