@@ -18,51 +18,35 @@ public class ServiceConcept {
 	@Value("${gemini.api.url}")
 	private String strApiUrl;
 	public String askAI(String prompt) throws Exception {
-	String body = """
-		{
-		"contents": [
-			{
-			"parts": [
-				{"text": "%s"}
-			]
-			}
-		]
-		}
-		""".formatted(prompt);
-		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create(strApiUrl + strApiKey))
+		String body = """
+					{
+						"model": "llama3-70b-8192",
+						"messages": [
+						{
+							"role": "user",
+							"content": "%s"
+						}
+						]
+					}
+"				"".formatted(prompt);
+			HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create(strApiUrl))
+				.header("Authorization", strApiKey)
 				.header("Content-Type", "application/json")
 				.POST(HttpRequest.BodyPublishers.ofString(body))
 				.build();
-		HttpClient client = HttpClient.newHttpClient();
-		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-		String responseBody = response.body();
-		System.out.println("responseBody------------------------->"+responseBody);
-		if ( response.statusCode() != 200 ) {
-			if ( response.statusCode() == 429 ) {
-				return "You exceeded your current quota, please check your plan and billing details. For more information on this contact akashsrvstv64@gmail.com";
-			} else {
-				return responseBody;
+			HttpClient client = HttpClient.newHttpClient();
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			System.out.println("response---------------->"+response);
+			JSONObject json = new JSONObject(response.body());
+			if (json.has("error")) {
+				return json.getJSONObject("error").getString("message");
 			}
-		}
-		JSONObject json = new JSONObject(responseBody);
-		String strAIReply = "";
-		if (json.has("candidates")) {
-			JSONArray candidates = json.getJSONArray("candidates");
-			if (candidates.length() > 0) {
-				JSONObject content = candidates
-						.getJSONObject(0)
-						.getJSONObject("content");
-				JSONArray parts = content.getJSONArray("parts");
-				for (int i = 0; i < parts.length(); i++) {
-					JSONObject part = parts.getJSONObject(i);
-					if (part.has("text")) {
-						strAIReply = part.getString("text");
-						break;
-					}
-				}
-			}
-		}
-		return strAIReply;
+			JSONArray choices = json.getJSONArray("choices");
+			String reply = choices
+				.getJSONObject(0)
+				.getJSONObject("message")
+				.getString("content");
+		return reply;
 	}
 }
