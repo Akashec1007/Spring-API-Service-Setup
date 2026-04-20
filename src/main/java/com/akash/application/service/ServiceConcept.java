@@ -18,37 +18,46 @@ public class ServiceConcept {
 	private String strApiKey;
 	@Value("${gemini.api.url}")
 	private String strApiUrl;
-
+	private Map<String, List<Map<String, String>>> chatMemory = new HashMap<>();
 	public String askAI(String prompt, String sessionId) throws Exception {
-		Map<String, List<Map<String, String>>> chatMemory = new HashMap<>();
-		List<Map<String, String>> messages = chatMemory.computeIfAbsent(sessionId, k -> new ArrayList<>());
+		List<Map<String, String>> messages =
+			chatMemory.computeIfAbsent(sessionId, k -> new ArrayList<>());
+		if (messages.isEmpty()) {
+			messages.add(Map.of(
+				"role", "system",
+				"content", "You are a helpful assistant. Maintain conversation context."
+			));
+		}
 		messages.add(Map.of("role", "user", "content", prompt));
-		JSONArray msgArray = new JSONArray(messages);
-		String body = new JSONObject().put("model", "llama-3.3-70b-versatile").put("messages", msgArray).toString();
+		if (messages.size() > 10) {
+			messages = messages.subList(messages.size() - 10, messages.size());
+			chatMemory.put(sessionId, messages);
+		}
+		JSONArray msgArray = new JSONArray();
+		for (Map<String, String> m : messages) {
+			msgArray.put(new JSONObject(m));
+		}
+		String body = new JSONObject()
+			.put("model", "llama-3.3-70b-versatile")
+			.put("messages", msgArray)
+			.toString();
 		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create(strApiUrl))
-				.header("Authorization", "Bearer " + strApiKey)
-				.header("Content-Type", "application/json")
-				.POST(HttpRequest.BodyPublishers.ofString(body))
-				.build();
+			.uri(URI.create(strApiUrl))
+			.header("Authorization", "Bearer " + strApiKey)
+			.header("Content-Type", "application/json")
+			.POST(HttpRequest.BodyPublishers.ofString(body))
+			.build();
 		HttpClient client = HttpClient.newHttpClient();
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 		JSONObject json = new JSONObject(response.body());
 		if (json.has("error")) {
 			return "❌ " + json.getJSONObject("error").getString("message");
 		}
-		if (json.has("choices")) {
-			JSONArray choices = json.getJSONArray("choices");
-			if (choices.length() > 0) {
-				String reply = json.getJSONArray("choices")
-					.getJSONObject(0)
-					.getJSONObject("message")
-					.getString("content");
-				messages.add(Map.of("role", "assistant", "content", reply));
-				System.out.println("messages----------------------->"+messages);
-				return reply;
-			}
-		}
-		return "No response from AI";
+		String reply = json.getJSONArray("choices")
+			.getJSONObject(0)
+			.getJSONObject("message")
+			.getString("content");
+		messages.add(Map.of("role", "assistant", "content", reply));
+		return reply;
 	}
 }
