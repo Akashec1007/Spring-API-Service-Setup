@@ -116,7 +116,7 @@ async function sendMessage() {
     try {
         console.log("Calling API...");
         let sessionId = localStorage.getItem("sessionId");
-]          if (!sessionId) {
+          if (!sessionId) {
             sessionId = (crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now().toString();
             localStorage.setItem("sessionId", sessionId);
           }
