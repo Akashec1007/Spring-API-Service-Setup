@@ -113,17 +113,18 @@ async function sendMessage() {
     chat.scrollTop = chat.scrollHeight;
 
     try {
+        console.log("Calling API...");
         let sessionId = localStorage.getItem("sessionId");
           if (!sessionId) {
             sessionId = crypto.randomUUID();
             localStorage.setItem("sessionId", sessionId);
           }
         let response = await fetch(`/ask?strQuery=${encodeURIComponent(message)}&sessionId=${sessionId}`);
+        console.log("Response received:", response);
         let fullText = await response.text();
-
+        console.log("fullText received:", fullText);
         let i = 0;
         let speed = 25; // lower = faster
-
         function typeEffect() {
             if (i < fullText.length) {
                 document.getElementById(botId).innerHTML += fullText.charAt(i);
@@ -132,15 +133,11 @@ async function sendMessage() {
                 setTimeout(typeEffect, speed);
             }
         }
-
         typeEffect();
-
     } catch (e) {
         document.getElementById(botId).innerText = "Error contacting server";
     }
 }
-
-// ENTER KEY
 document.getElementById("userInput")
     .addEventListener("keypress", function(e) {
         if (e.key === "Enter") sendMessage();
