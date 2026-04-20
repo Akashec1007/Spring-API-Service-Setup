@@ -118,7 +118,7 @@ async function sendMessage() {
 		console.log("sessionId...", sessionId);
           if (!sessionId) {
 		  console.log("inside if ...", sessionId);
-            sessionId = crypto.randomUUID();
+            sessionId = (crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now().toString();
 			console.log("post crypto if ...", sessionId);
             localStorage.setItem("sessionId", sessionId);
           }
