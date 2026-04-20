@@ -18,8 +18,9 @@ public class ServiceConcept {
 	private String strApiKey;
 	@Value("${gemini.api.url}")
 	private String strApiUrl;
-	private Map<String, List<Map<String, String>>> chatMemory = new HashMap<>();
+
 	public String askAI(String prompt, String sessionId) throws Exception {
+		Map<String, List<Map<String, String>>> chatMemory = new HashMap<>();
 		List<Map<String, String>> messages = chatMemory.computeIfAbsent(sessionId, k -> new ArrayList<>());
 		messages.add(Map.of("role", "user", "content", prompt));
 		JSONArray msgArray = new JSONArray(messages);
