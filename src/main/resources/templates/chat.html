@@ -115,8 +115,11 @@ async function sendMessage() {
     try {
         console.log("Calling API...");
         let sessionId = localStorage.getItem("sessionId");
+		console.log("sessionId...", sessionId);
           if (!sessionId) {
+		  console.log("inside if ...", sessionId);
             sessionId = crypto.randomUUID();
+			console.log("post crypto if ...", sessionId);
             localStorage.setItem("sessionId", sessionId);
           }
         let response = await fetch(`/ask?strQuery=${encodeURIComponent(message)}&sessionId=${sessionId}`);
