@@ -115,19 +115,14 @@ async function sendMessage() {
     try {
         console.log("Calling API...");
         let sessionId = localStorage.getItem("sessionId");
-		console.log("sessionId...", sessionId);
-          if (!sessionId) {
-		  console.log("inside if ...", sessionId);
+]          if (!sessionId) {
             sessionId = (crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now().toString();
-			console.log("post crypto if ...", sessionId);
             localStorage.setItem("sessionId", sessionId);
           }
         let response = await fetch(`/ask?strQuery=${encodeURIComponent(message)}&sessionId=${sessionId}`);
-        console.log("Response received:", response);
         let fullText = await response.text();
-        console.log("fullText received:", fullText);
         let i = 0;
-        let speed = 25; // lower = faster
+        let speed = 15; // lower = faster
         function typeEffect() {
             if (i < fullText.length) {
                 document.getElementById(botId).innerHTML += fullText.charAt(i);
