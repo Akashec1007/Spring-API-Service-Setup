@@ -44,10 +44,10 @@ public class ServiceConcept {
 					.getJSONObject("message")
 					.getString("content");
 				messages.add(Map.of("role", "assistant", "content", reply));
+				System.out.println("messages----------------------->"+messages);
 				return reply;
 			}
 		}
-		System.out.println("messages----------------------->"+messages);
 		return "No response from AI";
 	}
 }
