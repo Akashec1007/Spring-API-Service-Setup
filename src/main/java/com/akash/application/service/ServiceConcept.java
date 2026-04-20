@@ -22,8 +22,6 @@ public class ServiceConcept {
 	public String askAI(String prompt, String sessionId) throws Exception {
 		List<Map<String, String>> messages =
 			chatMemory.computeIfAbsent(sessionId, k -> new ArrayList<>());
-		System.out.println("chatMemory--11111111--"+chatMemory);
-		System.out.println("messages--111111111--"+messages);
 		if (messages.isEmpty()) {
 			messages.add(Map.of(
 				"role", "system",
@@ -60,8 +58,6 @@ public class ServiceConcept {
 			.getJSONObject("message")
 			.getString("content");
 		messages.add(Map.of("role", "assistant", "content", reply));
-		System.out.println("chatMemory--222222222--"+chatMemory);
-		System.out.println("messages--222222222--"+messages);
 		return reply;
 	}
 }
