@@ -98,6 +98,7 @@ async function sendMessage() {
             sessionId = (crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now().toString();
             localStorage.setItem("sessionId", sessionId);
           }
+		console("sessionId------>",sessionId);
         let response = await fetch(`/ask?strQuery=${encodeURIComponent(message)}&sessionId=${sessionId}`);
         let fullText = await response.text();
         let i = 0;
