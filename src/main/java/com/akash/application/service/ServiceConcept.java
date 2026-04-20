@@ -47,6 +47,7 @@ public class ServiceConcept {
 				return reply;
 			}
 		}
+		System.out.println("messages----------------------->"+messages);
 		return "No response from AI";
 	}
 }
