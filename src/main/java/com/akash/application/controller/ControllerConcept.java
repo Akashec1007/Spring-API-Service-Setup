@@ -24,7 +24,6 @@ public class ControllerConcept {
 	@GetMapping("/ask")
 	public String ask(@RequestParam String strQuery, @RequestParam String sessionId) throws Exception {
 		System.out.println("User Query : "+strQuery);
-		System.out.println("sessionId : "+sessionId);
 		String strResponse = serviceConcept.askAI(strQuery,sessionId);
 		System.out.println("Query Response : "+strResponse);
 		return strResponse;

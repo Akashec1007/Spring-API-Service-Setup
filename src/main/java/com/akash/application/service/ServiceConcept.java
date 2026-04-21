@@ -41,8 +41,6 @@ public class ServiceConcept {
 			.put("model", "llama-3.3-70b-versatile")
 			.put("messages", msgArray)
 			.toString();
-		System.out.println("Body to AI API call ------------->"+body);
-		System.out.println("User INput ------------->"+prompt);
 		HttpRequest request = HttpRequest.newBuilder()
 			.uri(URI.create(strApiUrl))
 			.header("Authorization", "Bearer " + strApiKey)
@@ -51,7 +49,6 @@ public class ServiceConcept {
 			.build();
 		HttpClient client = HttpClient.newHttpClient();
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-		System.out.println("response from AI API call--------------->"+response);
 		JSONObject json = new JSONObject(response.body());
 		if (json.has("error")) {
 			return "❌ " + json.getJSONObject("error").getString("message");
